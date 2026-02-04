@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MC5 Player Info</title>
+<style>
+body { font-family: Arial, sans-serif; padding: 20px; background:#f0f0f0; }
+h1 { color:#333; }
+form { margin-bottom: 20px; }
+input[type=text] { padding: 10px; width: 250px; border-radius: 5px; border: 1px solid #ccc; }
+button { padding: 10px 20px; border-radius: 5px; border: none; background-color: #007BFF; color: white; cursor: pointer; }
+button:hover { background-color: #0056b3; }
+.card { background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); margin-top:20px; }
+ul { list-style-type: disc; padding-left: 20px; }
+.error { color:red; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<h1>MC5 Player Info</h1>
+
+<form method="POST" action="/search">
+    <input type="text" name="dogtag" placeholder="Enter Dogtag" required>
+    <button type="submit">Search</button>
+</form>
+
+{% if error %}
+<p class="error">Error: {{ error }}</p>
+{% endif %}
+
+{% if profile %}
+<div class="card">
+    <h2>Player: {{ dogtag }}</h2>
+    <p><strong>Clan:</strong> {{ profile.clan_name }}</p>
+    <p><strong>Country:</strong> {{ profile.country }}</p>
+    <p><strong>VIP Level:</strong> {{ profile.vip_level }} ({{ profile.vip_points }} points)</p>
+    <p><strong>Total Kills:</strong> {{ profile.total_kills }}</p>
+    <p><strong>Weapons:</strong></p>
+    <ul>
+    {% for w in profile.weapons %}
+        <li>{{ w }}</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+</body>
+</html>
